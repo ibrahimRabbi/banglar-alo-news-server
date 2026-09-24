@@ -52,9 +52,14 @@ const centerSchema = new Schema<Tcenter>(
             required: [true, 'Center phone is required'],
             trim: true,
         },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        }
     },
     {
         timestamps: true,
+        strict : 'throw',
     }
 );
 
