@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { catchAsync } from "../../helper/catchAsync";
-import { generateCenterId } from "../../utils/centerIdGenerator";
+import { generateId } from "../../utils/idGenerator";
 import { centerModel } from "./center.model";
 import status from "http-status";
 
@@ -18,10 +18,10 @@ export const centerCreateController: RequestHandler = catchAsync(async (req, res
     }
     const data = {
         ...req.body,
-        center_id: generateCenterId(req.body.district),
+        center_id: generateId(req.body.district),
     };
     const center = await centerModel.create(data);
-    
+
     res.status(status.CREATED).json({
         status: status.CREATED,
         success: true,
@@ -57,7 +57,7 @@ export const getAllCenterController: RequestHandler = catchAsync(async (req, res
 
 export const deleteCenterController: RequestHandler = catchAsync(async (req, res, next) => {
 
-    if(!req.params.center_id){
+    if (!req.params.center_id) {
         throw new Error('Center ID is required');
     }
 

@@ -3,11 +3,13 @@ import { mentorModel } from "./mentor.model";
 import { catchAsync } from "../../helper/catchAsync";
 import { RequestHandler } from "express";
 import { Tmentor } from "./mentor.interface";
-import { generateCenterId } from "../../utils/centerIdGenerator";
+import { generateId } from "../../utils/idGenerator";
 
 export const createMentorController: RequestHandler = catchAsync(async (req, res, next) => {
+    const mentorId = generateId(req.body?.mentor_name)
     const checkBefore = await mentorModel.findOne({
         $or: [
+            { mentor_id: mentorId },
             { mentor_email: req.body.mentor_email },
             { mentor_phone: req.body.mentor_phone },
         ]
@@ -17,10 +19,10 @@ export const createMentorController: RequestHandler = catchAsync(async (req, res
         return next(new Error('Mentor with this email or phone number already exists'));
     }
 
-    const data:Tmentor = {
-        mentor_id: generateCenterId(req.body?.mentor_name),
-         ...req.body,
-     }
+    const data: Tmentor = {
+        mentor_id: mentorId,
+        ...req.body,
+    }
     const mentor = await mentorModel.create(data);
 
     res.status(status.CREATED).json({
@@ -33,7 +35,7 @@ export const createMentorController: RequestHandler = catchAsync(async (req, res
 });
 
 export const getMentorController: RequestHandler = catchAsync(async (req, res, next) => {
-     
+
 
     if (!req.params.mentor_id) {
         return next(new Error('Mentor ID is required'));
@@ -56,7 +58,7 @@ export const getMentorController: RequestHandler = catchAsync(async (req, res, n
 
 export const getAllMentorsController: RequestHandler = catchAsync(async (req, res, next) => {
 
-    const mentors = await mentorModel.find({isDeleted:{ $ne: true }}).populate('center_id', 'center_name district division sub_area');
+    const mentors = await mentorModel.find({ isDeleted: { $ne: true } }).populate('center_id', 'center_name district division sub_area');
 
     res.status(status.OK).json({
         status: status.OK,
@@ -84,4 +86,3 @@ export const deleteMentorController: RequestHandler = catchAsync(async (req, res
 
 });
 
-      
