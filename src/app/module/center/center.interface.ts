@@ -9,5 +9,6 @@ export type Tcenter = {
     center_address: string,
     center_email: string,
     center_phone?: string,
+    center_images : string[],
     isDeleted?: boolean,
 }

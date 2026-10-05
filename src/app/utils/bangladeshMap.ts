@@ -82,15 +82,7 @@ export const bangladeshLocations: DivisionLocation[] = [
             },
             {
                 name: 'Munshiganj',
-                subAreas: [
-                    'Munshiganj Sadar',
-                    'Sreenagar',
-                    'Sreemangal',
-                    'Lohajang',
-                    'Sirajdikhan',
-                    'Tongibari',
-                    'Gazaria',
-                ],
+                subAreas: ['Munshiganj Sadar', 'Sreenagar', 'Lohajang', 'Sirajdikhan', 'Tongibari', 'Gazaria'],
             },
             {
                 name: 'Tangail',
@@ -514,18 +506,7 @@ export const bangladeshLocations: DivisionLocation[] = [
             },
             {
                 name: 'Bagerhat',
-                subAreas: [
-                    'Bagerhat Sadar',
-                    'Chitalmari',
-                    'Fakirhat',
-                    'Kachua',
-                    'Mollahat',
-                    'Mongla',
-                    'Morrelganj',
-                    'Mongla',
-                    'Rampal',
-                    'Sarankhola',
-                ],
+                subAreas: ['Bagerhat Sadar', 'Chitalmari', 'Fakirhat', 'Kachua', 'Mollahat', 'Mongla', 'Morrelganj', 'Rampal', 'Sarankhola'],
             },
             {
                 name: 'Jhenaidah',

@@ -23,8 +23,9 @@ export const createStudentController: RequestHandler = catchAsync(async (req, re
 
     const data: Partial<Tstudent> = {
         student_id: studentId,
-        status: 'active',
         ...req?.body,
+        enrollment_date: new Date(),
+        status: 'active',
         isDeleted: false
     }
 
@@ -43,9 +44,9 @@ export const createStudentController: RequestHandler = catchAsync(async (req, re
 
 export const getAllstudentController: RequestHandler = catchAsync(async (req, res) => {
     const gettingAll = await studentModel.find({ isDeleted: { $ne: true } })
-    // if (gettingAll.length) {
-    //     throw new Error('data is empty')
-    // }
+        .populate('course_id', 'course_name course_code')
+        .populate('center_id', 'center_id sub_area district division')
+         
 
     res.status(status.OK).json({
         status: status.OK,
@@ -58,6 +59,9 @@ export const getAllstudentController: RequestHandler = catchAsync(async (req, re
 
 export const geStudentController: RequestHandler = catchAsync(async (req, res) => {
     const getting = await studentModel.findById(req.params?.id)
+        .populate('course_id', 'course_name course_code')
+        .populate('center_id', 'center_id sub_area district division')
+         
 
 
     res.status(status.OK).json({

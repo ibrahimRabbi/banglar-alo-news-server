@@ -13,9 +13,18 @@ const studentSchema = new Schema<Tstudent>(
 
         course_id: {
             type: Schema.Types.ObjectId,
-            ref: "course",
+            ref: "courses",
             required: [true, "Course ID is required"],
         },
+        batch_id: {
+            type: String,
+            required: [true, "Batch ID is required"],
+        },
+        // batch_id: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: "batches",
+        //     required: [true, "Batch ID is required"],
+        // },
 
         center_id: {
             type: Schema.Types.ObjectId,
@@ -34,14 +43,17 @@ const studentSchema = new Schema<Tstudent>(
             },
         },
 
-        
-
         name: {
             type: String,
             required: [true, "Student name is required"],
             trim: true,
             minlength: [2, "Student name must be at least 2 characters"],
             maxlength: [100, "Student name cannot exceed 100 characters"],
+        },
+        image: {
+            type: String,
+            required: [true, "Student image is required"],
+            trim: true,
         },
 
         father_name: {

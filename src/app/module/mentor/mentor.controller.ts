@@ -41,7 +41,7 @@ export const getMentorController: RequestHandler = catchAsync(async (req, res, n
         return next(new Error('Mentor ID is required'));
     }
 
-    const mentor = await mentorModel.findById(req.params.mentor_id).populate('center_id', 'center_name district division sub_area');
+    const mentor = await mentorModel.findById(req.params.mentor_id).populate('center_id', 'center_name district division sub_area center_id');
 
     if (!mentor) {
         return next(new Error('Mentor not found'));

@@ -4,9 +4,11 @@ export type Tstudent = {
     student_id: string;
     course_id: Types.ObjectId;
     center_id: Types.ObjectId;
+    // batch_id?: Types.ObjectId;
+    batch_id: string;
     enrollment_date: Date;
-    // batch_id?: string;
     name: string;
+    image: string;
     father_name: string;
     mother_name: string;
     dateOfBirth: Date;

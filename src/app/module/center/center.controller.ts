@@ -4,10 +4,23 @@ import { generateId } from "../../utils/idGenerator";
 import { centerModel } from "./center.model";
 import status from "http-status";
 
+const generateCenterId = async (): Promise<string> => {
+    let id: string
+    let exists = true
+
+    do {
+        id = Math.floor(100000 + Math.random() * 900000).toString()
+        exists = !!(await centerModel.exists({ center_id: id }))
+    } while (exists)
+
+    return id
+}
+
 export const centerCreateController: RequestHandler = catchAsync(async (req, res, next) => {
+    const center_id = await generateCenterId();
     const checkBefore = await centerModel.findOne({
         $and: [
-            { center_name: req.body.center_name },
+            { center_id },
             { district: req.body.district },
             { division: req.body.division },
             { sub_area: req.body.sub_area }
@@ -18,7 +31,7 @@ export const centerCreateController: RequestHandler = catchAsync(async (req, res
     }
     const data = {
         ...req.body,
-        center_id: generateId(req.body.district),
+        center_id,
     };
     const center = await centerModel.create(data);
 
@@ -61,11 +74,7 @@ export const deleteCenterController: RequestHandler = catchAsync(async (req, res
         throw new Error('Center ID is required');
     }
 
-    const centers = await centerModel.findByIdAndUpdate(
-        req.params.center_id,
-        { isDeleted: true },
-        { new: true, runValidators: true, context: 'query' }
-    );
+    const centers = await centerModel.findByIdAndDelete(req.params.center_id);
 
 
     res.status(status.OK).json({
